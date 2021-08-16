@@ -111,7 +111,7 @@ RegisterNUICallback('resim', function(data, cb)
                 CellCamActivate(false, false)
                 takePhoto = false
             elseif IsControlJustPressed(1, 176) then -- TAKE.. PIC
-                local url = exports['tgiann-base']:screenShot()
+                local url = screenShot()
                 if url then
                     SendNUIMessage({type = 'user-avatar', url = url})
                     TriggerServerEvent("tgiann-mdtv2:setavatar", url, data.id)
@@ -130,6 +130,34 @@ RegisterNUICallback('resim', function(data, cb)
             HideHudComponentThisFrame(19)
             HideHudAndRadarThisFrame()
         end
+    end
+end)
+
+local screenShotCD = 0
+function screenShot()
+    local callbackData = nil
+    screenShotCD = 0
+    exports['screenshot-basic']:requestScreenshotUpload("your-webhook", "files[]", function(data)
+        callbackData = json.decode(data)
+    end)
+    while callbackData == nil do
+        Citizen.Wait(1000)
+        screenShotCD = screenShotCD + 1
+        if screenShotCD > 10 then
+            break
+        end
+    end
+
+    if callbackData then
+        if callbackData.message then
+            print("HATA: "..callbackData.message)
+            return false
+        else
+            return callbackData.attachments[1].proxy_url
+        end
+    else
+        print("HATA: Resim Çekilemedi")
+        return "Resim Çekilemedi"
     end
 end)
 
