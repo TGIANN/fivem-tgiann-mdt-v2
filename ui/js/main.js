@@ -67,7 +67,7 @@ function setPlayerData(type, data) {
                 if (tip == "plaka") { 
                     name = name + " (" + element.plate + ")" 
                 } else if (tip == "numara") { 
-                    name = name + " (" + element.number + ")" 
+                    name = name + " (" + element.phone_number + ")" 
                 }
                 htmlSorgu = htmlSorgu + `
                     <div class="kullanici" data-id="${index}">
@@ -139,7 +139,7 @@ $(document).on("click",".kullanici",function() {
         hideUi(".aranma-kutu")
     }
 
-    $.post('http://tgiann-mdtv2/photo', JSON.stringify({data: secilenCitizenid, tip: "arac"}), function(cbData) {
+    $.post('http://tgiann-mdtv2/photo', JSON.stringify({data: secilenCitizenid}), function(cbData) {
         let userPhoto = cbData
         if (userPhoto == null) { userPhoto = "img/avatar.png" }
 
@@ -153,7 +153,7 @@ $(document).on("click",".kullanici",function() {
             </div>
 
             <div class="sorgu-sag-alt-sag">
-                <div class="bilgi"><div class="bilgi-sol">Telefon Numarası</div><div class="bilgi-sag">${userData.number}</div></div>
+                <div class="bilgi"><div class="bilgi-sol">Telefon Numarası</div><div class="bilgi-sag">${userData.phone_number}</div></div>
                 <div class="bilgi"><div class="bilgi-sol">Banka</div><div class="bilgi-sag">${Intl.NumberFormat('en-US').format(JSON.parse(userData.accounts).bank)}$</div></div>
                 <div class="bilgi"><div class="bilgi-sol">Doğum Tarihi</div><div class="bilgi-sag">${userData.dateofbirth}</div></div>
             </div>

@@ -51,11 +51,12 @@ RegisterNUICallback('sorgula', function(data, cb)
 end)
 
 RegisterNUICallback('photo', function(data, cb)
-    local sorguData = nil
+    local cbComplated = false
     ESX.TriggerServerCallback("tgiann-mdtv2:photo", function(result)
         sorguData = result
+        cbComplated = true
     end, data)
-    while sorguData == nil do Citizen.Wait(0) end
+    while not cbComplated do Citizen.Wait(0) end
     cb(sorguData)
 end)
 
