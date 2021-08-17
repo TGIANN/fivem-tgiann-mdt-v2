@@ -51,7 +51,7 @@ ESX.RegisterServerCallback("tgiann-mdtv2:sorgula", function(source, cb, data)
             end
         end) 
     elseif data.tip == "numara" then
-        MySQL.Async.fetchAll("SELECT * FROM users WHERE number LIKE @search LIMIT 30", {
+        MySQL.Async.fetchAll("SELECT * FROM users WHERE phone_number LIKE @search LIMIT 30", {
             ['@search'] = '%'..data.data..'%'
         }, function (result)
             if result then
