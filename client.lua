@@ -13,7 +13,6 @@ Citizen.CreateThread(function()
     firstLogin()
 end)
 
-
 RegisterNetEvent('esx:playerLoaded')
 AddEventHandler('esx:playerLoaded', function()
     firstLogin()
@@ -117,10 +116,11 @@ RegisterNUICallback('resim', function(data, cb)
                     SendNUIMessage({type = 'user-avatar', url = url})
                     TriggerServerEvent("tgiann-mdtv2:setavatar", url, data.id)
                 else
+                    local text = lang[langSetting]["photoError"]
                     if Config.Notify == 'esx' then
-                        ESX.ShowNotification(lang[langSetting]["photoError"])
+                        ESX.ShowNotification(text)
                     elseif Config.Notify == 'mythic' then
-                        exports['mythic_notify']:SendAlert('error', lang[langSetting]["photoError"], 2500)
+                        exports['mythic_notify']:SendAlert('error', text, 2500)
                     end
                 end
                 openClose()
@@ -217,10 +217,10 @@ RegisterNUICallback('olaysil', function(data, cb)
     TriggerServerEvent("tgiann-mdtv2:olaysil", data.id)
 end)
 
-RegisterCommand('mdt', function()
+RegisterCommand(Config.KeyMapping..'mdtkeymapping', function()
     TriggerEvent('tgiann-mdtv2:open')
 end)
-RegisterKeyMapping('mdt', lang[langSetting]["keyMappingHelp"], 'keyboard', 'delete')
+RegisterKeyMapping(Config.KeyMapping..'mdtkeymapping', lang[langSetting]["keyMappingHelp"], 'keyboard', Config.KeyMapping)
 
 RegisterNetEvent("tgiann-mdtv2:open")
 AddEventHandler("tgiann-mdtv2:open", function()
@@ -253,38 +253,43 @@ end)
 RegisterCommand("tabletzoom", function(source, args)
     if PlayerData.job and PlayerData.job.name == "police"  then
         if args[1] == nil then
+            local text = lang[langSetting]["zoomSettingNilError"]
             if Config.Notify == 'esx' then
-                ESX.ShowNotification(lang[langSetting]["zoomSettingNilError"])
+                ESX.ShowNotification(text)
             elseif Config.Notify == 'mythic' then
-                exports['mythic_notify']:SendAlert('error', lang[langSetting]["zoomSettingNilError"], 2500)
+                exports['mythic_notify']:SendAlert('error', text, 2500)
             end
         end
 
         if tonumber(args[1]) < 50 then
+            local text = lang[langSetting]["zoomSettingMinError"]
             if Config.Notify == 'esx' then
-                ESX.ShowNotification(lang[langSetting]["zoomSettingMinError"])
+                ESX.ShowNotification(text)
             elseif Config.Notify == 'mythic' then
-                exports['mythic_notify']:SendAlert('error', lang[langSetting]["zoomSettingMinError"], 2500)
+                exports['mythic_notify']:SendAlert('error', text, 2500)
             end
         elseif tonumber(args[1]) > 100 then
+            local text = lang[langSetting]["zoomSettingMaxError"]
             if Config.Notify == 'esx' then
-                ESX.ShowNotification(lang[langSetting]["zoomSettingMaxError"])
+                ESX.ShowNotification(text)
             elseif Config.Notify == 'mythic' then
-                exports['mythic_notify']:SendAlert('error', lang[langSetting]["zoomSettingMaxError"], 2500)
+                exports['mythic_notify']:SendAlert('error', text, 2500)
             end
         else
+            local text = lang[langSetting]["zoomSettingConfirm"]
             if Config.Notify == 'esx' then
-                ESX.ShowNotification(lang[langSetting]["zoomSettingConfirm"])
+                ESX.ShowNotification(text)
             elseif Config.Notify == 'mythic' then
-                exports['mythic_notify']:SendAlert('success', lang[langSetting]["zoomSettingConfirm"], 2500)
+                exports['mythic_notify']:SendAlert('success', text, 2500)
             end
             SendNUIMessage({type = 'zoom', val = args[1]})
         end
     else
+        local text = lang[langSetting]["zoomSettingNotPolice"]
         if Config.Notify == 'esx' then
-            ESX.ShowNotification(lang[langSetting]["zoomSettingNotPolice"])
+            ESX.ShowNotification(text)
         elseif Config.Notify == 'mythic' then
-            exports['mythic_notify']:SendAlert('error', lang[langSetting]["zoomSettingNotPolice"], 2500)
+            exports['mythic_notify']:SendAlert('error', text, 2500)
         end
     end
 end)
