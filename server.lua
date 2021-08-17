@@ -29,9 +29,10 @@ Citizen.CreateThread(function()
     end) 
 end)
 
+--[[
 RegisterCommand("mdt", function(source, args)
 	TriggerClientEvent('tgiann-mdtv2:open', source)
-end)
+end)]]
 
 ESX.RegisterServerCallback("tgiann-mdtv2:sorgula", function(source, cb, data)
     if data.tip == "isim" then
