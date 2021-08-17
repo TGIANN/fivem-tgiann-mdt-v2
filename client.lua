@@ -1,6 +1,5 @@
 local coreLoaded = false
 local nuiFocus = false
-local active = false
 local tab = 0
 local PlayerData = {}
 ESX = nil
@@ -37,6 +36,8 @@ function firstLogin()
             table.insert(firstData.items, data.label)
         end
         firstData.players = result
+        firstData.lang = lang[langSetting]
+        firstData.resourceName = GetCurrentResourceName()
         SendNUIMessage({type = 'ilk-bilgi', data = firstData})
     end)
 end
@@ -116,7 +117,7 @@ RegisterNUICallback('resim', function(data, cb)
                     SendNUIMessage({type = 'user-avatar', url = url})
                     TriggerServerEvent("tgiann-mdtv2:setavatar", url, data.id)
                 else
-                    ESX.ShowNotification("Resim Çekilemedi!")
+                    ESX.ShowNotification(lang[langSetting]["photoError"])
                 end
                 openClose()
                 DestroyMobilePhone()
@@ -150,14 +151,14 @@ function screenShot()
 
     if callbackData then
         if callbackData.message then
-            print("HATA: "..callbackData.message)
+            print(lang[langSetting]["f8error"].." "..callbackData.message)
             return false
         else
             return callbackData.attachments[1].proxy_url
         end
     else
-        print("HATA: Resim Çekilemedi")
-        return "Resim Çekilemedi"
+        print(lang[langSetting]["f8error"].." "..lang[langSetting]["photoError"])
+        return lang[langSetting]["photoError"]
     end
 end
 
@@ -212,25 +213,11 @@ RegisterNUICallback('olaysil', function(data, cb)
     TriggerServerEvent("tgiann-mdtv2:olaysil", data.id)
 end)
 
-RegisterNetEvent('tgiann-denizalti:emp')
-AddEventHandler('tgiann-denizalti:emp', function(_active)
-	active = _active
-	if active then
-        if nuiFocus then
-            openClose()
-        end
-  	end
-end)
-
 RegisterNetEvent("tgiann-mdtv2:open")
 AddEventHandler("tgiann-mdtv2:open", function()
     if PlayerData.job == nil then firstLogin() end
 	if PlayerData.job and PlayerData.job.name == "police"  then
-		if not active then
-			openClose()
-		else
-			ESX.ShowNotification("Şuan Tableti Kullanamazsın!")
-		end
+        openClose()
 	end
 end)
 
@@ -251,24 +238,24 @@ RegisterNUICallback('olayara', function(data, cb)
 end)
 
 Citizen.CreateThread(function()
-    TriggerEvent('chat:addSuggestion', '/tabletzoom', 'Tabletin Boyutunu Ayarlar.', {{ name="Tablet Boyutu", help="50 İle 100 Arası Bir Değer"}})
+    TriggerEvent('chat:addSuggestion', '/tabletzoom', lang[langSetting]["zoomSetting"], {{ name=lang[langSetting]["zoomSettingName"], help=lang[langSetting]["zoomSettingHelp"]}})
 end)
 
 RegisterCommand("tabletzoom", function(source, args)
     if PlayerData.job and PlayerData.job.name == "police"  then
         if args[1] == nil then
-            ESX.ShowNotification("Bir Değer Girmedin! (50-100)")
+            ESX.ShowNotification(lang[langSetting]["zoomSettingNilError"])
         end
 
         if tonumber(args[1]) < 50 then
-            ESX.ShowNotification("50'den Küçük Bir Değer Giremezsin")
+            ESX.ShowNotification(lang[langSetting]["zoomSettingMinError"])
         elseif tonumber(args[1]) > 100 then
-            ESX.ShowNotification("100'den Büyük Bir Değer Giremezsin")
+            ESX.ShowNotification(lang[langSetting]["zoomSettingMaxError"])
         else
-            ESX.ShowNotification("Tablet Boyutu Ayarlandı", "success")
+            ESX.ShowNotification(lang[langSetting]["zoomSettingConfirm"])
             SendNUIMessage({type = 'zoom', val = args[1]})
         end
     else
-        ESX.ShowNotification("Bu Komutu Kullanamazsın!")
+        ESX.ShowNotification(lang[langSetting]["zoomSettingNotPolice"])
     end
 end)

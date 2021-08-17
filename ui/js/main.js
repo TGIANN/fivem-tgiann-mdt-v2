@@ -1,49 +1,54 @@
-let playerData = []
-let playerVehicleData = []
-let bildirimAcik = false
+let lang = [];
+let resourceName = "";
+
+let playerData = [];
+let playerVehicleData = [];
+let bildirimAcik = false;
+
+let gunler = [];
 
 let polisler = [];
 let zanlilar = [];
 let esyalar = [];
 
-let polisIsim = "Osman Tekatar"
-let zanliIsim = "Mehmet Arlanmaz"
+let polisIsim = "Osman Tekatar";
+let zanliIsim = "Mehmet Arlanmaz";
 
-let ekliPolisler = []
-let ekliZanlilar = []
-let ekliEsyalar = []
+let ekliPolisler = [];
+let ekliZanlilar = [];
+let ekliEsyalar = [];
 
-let secilenCitizenid = ""
+let secilenCitizenid = "";
 
-let indirim = 100
+let indirim = 100;
 
-let illegal = false
+let illegal = false;
 
-let toplamTrafikCeza = 0
+let toplamTrafikCeza = 0;
 
-let toplamPara = 0
-let toplamHapis = 0
-let toplamKamu = 0
+let toplamPara = 0;
+let toplamHapis = 0;
+let toplamKamu = 0;
 
 $("#isim-input").click(function() {
-    $("#plaka-input").val("")
-    $("#numara-input").val("")
+    $("#plaka-input").val("");
+    $("#numara-input").val("");
 });
 
 $("#numara-input").click(function() {
-    $("#isim-input").val("")
-    $("#plaka-input").val("")
+    $("#isim-input").val("");
+    $("#plaka-input").val("");
 });
 
 $("#plaka-input").click(function() {
-    $("#isim-input").val("")
-    $("#numara-input").val("")
+    $("#isim-input").val("");
+    $("#numara-input").val("");
 });
 
 $("#sorgula").click(function() {
-    const isimInput = $("#isim-input").val()
-    const numaraInput = $("#numara-input").val()
-    const plakaInput = $("#plaka-input").val()
+    const isimInput = $("#isim-input").val();
+    const numaraInput = $("#numara-input").val();
+    const plakaInput = $("#plaka-input").val();
     if (isimInput != "") {
         setPlayerData("isim", isimInput);
     } else if (numaraInput != "") {
@@ -55,7 +60,7 @@ $("#sorgula").click(function() {
 
 function setPlayerData(type, data) {
     let tip = type
-    $.post('http://tgiann-mdtv2/sorgula', JSON.stringify({data: data, tip: tip}), function(cbData) {
+    $.post('http://'+resourceName+'/sorgula', JSON.stringify({data: data, tip: tip}), function(cbData) {
         playerData = cbData
         if (playerData.length) {
             $("#isim-input").val("")
@@ -83,17 +88,16 @@ function setPlayerData(type, data) {
             showUi('#sorgu2-button', "block")
         } else {
             if (tip == "numara") {
-                bildirim("Aradığınız Numaraya Ait Veri Bulunamadı!", "hata")
+                bildirim(lang["noFoundNumber"], "hata")
             } else if (tip == "plaka") {
-                bildirim("Aradığınız Plakaya Ait Veri Bulunamadı!", "hata")
+                bildirim(lang["noFoundPlate"], "hata")
             } else {
-                bildirim("Aradığınız İsme Ait Veri Bulunamadı!", "hata")
+                bildirim(lang["noFoundUser"], "hata")
             }
         }
     });
 };
 
-var gunler = new Array("Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi");
 function tarih(date) {
     var now = new Date(date)
     var yil = now.getFullYear();
@@ -124,7 +128,7 @@ $(document).on("click",".kullanici",function() {
     let aranma = JSON.parse(userData.aranma)
     zanliIsim = userData.firstname + " " + userData.lastname
     secilenCitizenid = userData.identifier
-    let aranmaButton = '<button class="sorgu-button-2-araniyor" id="araniyor">Arananlara Ekle</button>'
+    let aranmaButton = '<button class="sorgu-button-2-araniyor" id="araniyor">'+lang["addWanted"]+'</button>'
     if (aranma.durum) {
         showUi(".aranma-kutu", "flex")
         $(".aranma-kutu").html(`
@@ -134,12 +138,12 @@ $(document).on("click",".kullanici",function() {
                 <div class="aranma-saat"><i class="fas fa-unlock-alt fa-lg"></i>${tarih(aranma.saat * 1000)}</div>
             </div>
         `)
-        aranmaButton = '<button class="sorgu-button-2-araniyor" id="aranmakaldir">Aranmasını Kaldır!</button>'
+        aranmaButton = '<button class="sorgu-button-2-araniyor" id="aranmakaldir">'+lang["removeWanted"]+'</button>'
     } else {
         hideUi(".aranma-kutu")
     }
 
-    $.post('http://tgiann-mdtv2/photo', JSON.stringify({data: secilenCitizenid}), function(cbData) {
+    $.post('http://'+resourceName+'/photo', JSON.stringify({data: secilenCitizenid}), function(cbData) {
         let userPhoto = cbData
         if (userPhoto == null) { userPhoto = "img/avatar.png" }
 
@@ -147,32 +151,32 @@ $(document).on("click",".kullanici",function() {
         hideUi(".arac-bilgi-kutu")
         $("#kullaniciBilgi").html(`
             <div class="sorgu-sag-alt-sol">
-                <div class="bilgi"><div class="bilgi-sol">Cinsiyet</div><div class="bilgi-sag">${userGender}</div></div>
-                <div class="bilgi"><div class="bilgi-sol">İsim</div><div class="bilgi-sag">${userData.firstname}</div></div>
-                <div class="bilgi"><div class="bilgi-sol">Soyisim</div><div class="bilgi-sag">${userData.lastname}</div></div>
+                <div class="bilgi"><div class="bilgi-sol">${lang["sex"]}</div><div class="bilgi-sag">${userGender}</div></div>
+                <div class="bilgi"><div class="bilgi-sol">${lang["name"]}</div><div class="bilgi-sag">${userData.firstname}</div></div>
+                <div class="bilgi"><div class="bilgi-sol">${lang["lastname"]}</div><div class="bilgi-sag">${userData.lastname}</div></div>
             </div>
 
             <div class="sorgu-sag-alt-sag">
-                <div class="bilgi"><div class="bilgi-sol">Telefon Numarası</div><div class="bilgi-sag">${userData.phone_number}</div></div>
-                <div class="bilgi"><div class="bilgi-sol">Banka</div><div class="bilgi-sag">${Intl.NumberFormat('en-US').format(JSON.parse(userData.accounts).bank)}$</div></div>
-                <div class="bilgi"><div class="bilgi-sol">Doğum Tarihi</div><div class="bilgi-sag">${userData.dateofbirth}</div></div>
+                <div class="bilgi"><div class="bilgi-sol">${lang["phoneNumber"]}</div><div class="bilgi-sag">${userData.phone_number}</div></div>
+                <div class="bilgi"><div class="bilgi-sol">${lang["bankMoney"]}</div><div class="bilgi-sag">${Intl.NumberFormat('en-US').format(JSON.parse(userData.accounts).bank)}$</div></div>
+                <div class="bilgi"><div class="bilgi-sol">${lang["dob"]}</div><div class="bilgi-sag">${userData.dateofbirth}</div></div>
             </div>
 
             <div class="userAvatarBox">
                 <div class="resim"><img src=${userPhoto}></div>
-                <button class="sorgu-button" id="resimyukle">Resim Yükle</button>
-                <input type="text" id="resimurl" placeholder="Resim URL'si">
+                <button class="sorgu-button" id="resimyukle">${lang["uploadPhoto"]}</button>
+                <input type="text" id="resimurl" placeholder="${lang["photoURL"]}">
             </div>
         `)
 
         $(".sorgu-buttons").html(`
-            <button class="sorgu-button-2" id="sabika-gir">Sabıka Görüntüle</button>
-            <button class="sorgu-button-2" id="olay-gir">Olay Gir</button>
+            <button class="sorgu-button-2" id="sabika-gir">${lang["viewCriminalRecord"]}</button>
+            <button class="sorgu-button-2" id="olay-gir">${lang["addCriminalRecord"]}</button>
             ${aranmaButton}
         `)
     });
 
-    $.post('http://tgiann-mdtv2/sorgula', JSON.stringify({data: secilenCitizenid, tip: "arac"}), function(cbData) {
+    $.post('http://'+resourceName+'/sorgula', JSON.stringify({data: secilenCitizenid, tip: "arac"}), function(cbData) {
         playerVehicleData = cbData
         $(".arac-bilgi-kutu").html("")
         if (playerVehicleData.length > 0) {
@@ -180,7 +184,7 @@ $(document).on("click",".kullanici",function() {
                 const element = playerVehicleData[index];
 
                 if (!JSON.parse(element.vehicle).carName) {
-                    element.vehicle.carName = "Bilinmiyor..."
+                    element.vehicle.carName = lang["unknown"]+"..."
                 }
                 $(".arac-bilgi-kutu").append(`
                     <div class="arac-bilgi" data-id="${index}">
@@ -501,13 +505,13 @@ $(document).on("click",".ceza-kayit", function() {
     cezaKayit.cezaisim = cezalarIsimleri
     cezaKayit.illegal = illegal
     if (cezaKayit.aciklama == "" ) {
-        Swal.fire({icon: 'error', text: 'Olayın açıklamasını girmediniz!'});
+        Swal.fire({icon: 'error', text: lang["noCriminalDescription"]});
     } else if (first) {
-        Swal.fire({icon: 'error', text: 'Hiç bir ceza seçmediniz!'});
+        Swal.fire({icon: 'error', text: lang["noAddCriminal"]});
     } else {
-        $.post('http://tgiann-mdtv2/cezakaydetclient', JSON.stringify({data: cezaKayit}));
+        $.post('http://'+resourceName+'/cezakaydetclient', JSON.stringify({data: cezaKayit}));
         hideUi("#olaygir-menu");
-        bildirim("Olay Kayıt Edildi!", "basari");
+        bildirim(lang["criminalAdded"], "basari");
     }
 });
 
@@ -531,7 +535,7 @@ $(document).on("click","#arananlar-tab-menu", function() {
     hideUi("#sorgu-tab");
     hideUi("#cezalart-tab");
 
-    $.post('http://tgiann-mdtv2/arananlar', JSON.stringify({}), function(cbData) {
+    $.post('http://'+resourceName+'/arananlar', JSON.stringify({}), function(cbData) {
         let htmlArananlar = ""
         for (let index = 0; index < cbData.length; index++) {
             const element = cbData[index];
@@ -555,15 +559,15 @@ $(document).on("click","#arananlar-tab-menu", function() {
 
 $(document).on("click",".aranan-kutu-kapat", function() {
     const citizenid = $(this).attr("data-id")
-    $.post('http://tgiann-mdtv2/aranmakaldir', JSON.stringify({id: citizenid}));
-    bildirim("Aranma Kaldırıldı!", "basari");
+    $.post('http://'+resourceName+'/aranmakaldir', JSON.stringify({id: citizenid}));
+    bildirim(lang["removedWanted"], "basari");
     $("#aranma-"+citizenid).remove();
     if (citizenid == secilenCitizenid) {
         hideUi(".aranma-kutu")
         $(".sorgu-buttons").html(`
-            <button class="sorgu-button-2" id="sabika-gir">Sabıka Görüntüle</button>
-            <button class="sorgu-button-2" id="olay-gir">Olay Gir</button>
-            <button class="sorgu-button-2-araniyor" id="araniyor">Arananlara Ekle!</button>
+            <button class="sorgu-button-2" id="sabika-gir">${lang["viewCriminalRecord"]}</button>
+            <button class="sorgu-button-2" id="olay-gir">${lang["addCriminalRecord"]}</button>
+            <button class="sorgu-button-2-araniyor" id="araniyor">${lang["addWanted"]}</button>
         `)
     }
 });  
@@ -574,7 +578,7 @@ $(document).on("click","#olay-tab-menu", function() {
     hideUi("#arananlar-tab");
     hideUi("#cezalart-tab");
 
-    $.post('http://tgiann-mdtv2/olaylardata', JSON.stringify({}), function(cbData) {
+    $.post('http://'+resourceName+'/olaylardata', JSON.stringify({}), function(cbData) {
         olayAraData(cbData)
         
     });
@@ -583,8 +587,8 @@ $(document).on("click","#olay-tab-menu", function() {
 function olayAraData(cbData) {
     let htmlOlaylar = `
         <div class="inputlar-olay-search">
-            <input type="text" id="search-olayno" placeholder="Olay No..."> 
-            <button type="button" id="search-olayno-button">Ara</button>
+            <input type="text" id="search-olayno" placeholder="${lang["criminalNo"]}"> 
+            <button type="button" id="search-olayno-button">${lang["search"]}</button>
         </div>
     `
     for (let index = 0; index < cbData.length; index++) {
@@ -654,7 +658,7 @@ function olayAraData(cbData) {
 }
 
 $(document).on("click","#sabika-gir", function() {
-    $.post('http://tgiann-mdtv2/sabikadata', JSON.stringify({id: secilenCitizenid}), function(cbData) {
+    $.post('http://'+resourceName+'/sabikadata', JSON.stringify({id: secilenCitizenid}), function(cbData) {
         let sabikaHtml = ""
         if (cbData.length > 0) {
             for (let index = 0; index < cbData.length; index++) {
@@ -678,7 +682,7 @@ $(document).on("click","#sabika-gir", function() {
             $(".sabika-row").html(sabikaHtml)
             showUi("#sabika-menu", "flex")
         } else {
-            bildirim("Kişinin Sabıka Kaydı Temiz!", "hata");
+            bildirim(lang["noFoundUserCriminalData"], "hata");
         }
     });
 });
@@ -686,15 +690,15 @@ $(document).on("click","#sabika-gir", function() {
 $(document).on("click","#search-olayno-button", function() {
     let value = $("#search-olayno").val()
     if (value.length > 0) {
-        $.post('http://tgiann-mdtv2/olayara', JSON.stringify({id: value}), function(cbData) {
+        $.post('http://'+resourceName+'/olayara', JSON.stringify({id: value}), function(cbData) {
             if (cbData.length > 0) {
                 olayAraData(cbData)
             } else {
-                bildirim(value+" Numaralı Olay Bulunamadı!", "hata");
+                bildirim(lang["noFoundUserCriminalData"], "hata");
             }
         });
     } else {
-        bildirim("Bir Olay Numarası Girmedin!", "hata");
+        bildirim(lang["noCriminalNumber"], "hata");
     }
 });
 
@@ -708,18 +712,18 @@ $(document).on("click","#aranma-close", function() {
 
 $(document).on("click",".sabika-aciklama-close", function() {
     $("#"+$(this).attr("data-id")).remove();
-    $.post('http://tgiann-mdtv2/sabikasil', JSON.stringify({id: $(this).attr("data-cezid")}));
-    bildirim("Sabıka Silindi!", "basari");
+    $.post('http://'+resourceName+'/sabikasil', JSON.stringify({id: $(this).attr("data-cezid")}));
+    bildirim(lang["removedCriminalRecord"], "basari");
 });
 
 $(document).on("click","#resimyukle", function() {
     if ($("#resimurl").val().length > 0) {
-        bildirim("Resim Yüklendi!", "basari");
+        bildirim(lang["photoUploaded"], "basari");
         $(".resim img").attr("src", $("#resimurl").val());
-        $.post('http://tgiann-mdtv2/resim', JSON.stringify({id: secilenCitizenid, url:$("#resimurl").val()}));
+        $.post('http://'+resourceName+'/resim', JSON.stringify({id: secilenCitizenid, url:$("#resimurl").val()}));
         $("#resimurl").val("")
     } else {
-        $.post('http://tgiann-mdtv2/resim', JSON.stringify({id: secilenCitizenid, url: false}));
+        $.post('http://'+resourceName+'/resim', JSON.stringify({id: secilenCitizenid, url: false}));
     }
 });
 
@@ -732,15 +736,15 @@ $(document).on("click",".aranmabutton", function() {
     let saat = $("#aranmasaat").val()
     let tip = $("#aranmatip").val()
     if (neden == "" ) {
-        Swal.fire({icon: 'error', text: 'Aranma nedeni yazmadınız!'});
+        Swal.fire({icon: 'error', text: lang["noReasonWanted"]});
     } else if (saat == "") {
-        Swal.fire({icon: 'error', text: 'Aranma saatini yazmadınız!'});
+        Swal.fire({icon: 'error', text: lang["noReasonClock"]});
     } else {
         if (tip == "saat") { saat = saat / 24 }
 
-        $.post('http://tgiann-mdtv2/aranma', JSON.stringify({id: secilenCitizenid, saat: saat, neden: neden, isim:zanliIsim}));
+        $.post('http://'+resourceName+'/aranma', JSON.stringify({id: secilenCitizenid, saat: saat, neden: neden, isim:zanliIsim}));
         hideUi("#aranma-menu")
-        bildirim("Aranma Kaydı Oluşturuldu!", "basari");
+        bildirim(lang["addedWanted"], "basari");
 
         showUi(".aranma-kutu", "flex")
 
@@ -753,21 +757,21 @@ $(document).on("click",".aranmabutton", function() {
         `)
 
         $(".sorgu-buttons").html(`
-            <button class="sorgu-button-2" id="sabika-gir">Sabıka Görüntüle</button>
-            <button class="sorgu-button-2" id="olay-gir">Olay Gir</button>
-            <button class="sorgu-button-2-araniyor" id="aranmakaldir">Aranmasını Kaldır!</button>
+            <button class="sorgu-button-2" id="sabika-gir">${lang["viewCriminalRecord"]}</button>
+            <button class="sorgu-button-2" id="olay-gir">${lang["addCriminalRecord"]}</button>
+            <button class="sorgu-button-2-araniyor" id="aranmakaldir">${lang["removeWanted"]}</button>
         `)
     }
 });
 
 $(document).on("click","#aranmakaldir", function() {
-    $.post('http://tgiann-mdtv2/aranmakaldir', JSON.stringify({id: secilenCitizenid}));
+    $.post('http://'+resourceName+'/aranmakaldir', JSON.stringify({id: secilenCitizenid}));
     bildirim("Aranma Kaldırıldı!", "basari");
     hideUi(".aranma-kutu")
     $(".sorgu-buttons").html(`
-        <button class="sorgu-button-2" id="sabika-gir">Sabıka Görüntüle</button>
-        <button class="sorgu-button-2" id="olay-gir">Olay Gir</button>
-        <button class="sorgu-button-2-araniyor" id="araniyor">Arananlara Ekle!</button>
+        <button class="sorgu-button-2" id="sabika-gir">${lang["viewCriminalRecord"]}</button>
+        <button class="sorgu-button-2" id="olay-gir">${lang["addCriminalRecord"]}</button>
+        <button class="sorgu-button-2-araniyor" id="araniyor">${lang["addWanted"]}</button>
     `)
 });
 
@@ -784,24 +788,27 @@ $('#indirim-ceza').on('input', function() {
 });
 
 $(document).on("click",".pd-close", function() {
-    $.post('http://tgiann-mdtv2/kapat', JSON.stringify({}));
+    $.post('http://'+resourceName+'/kapat', JSON.stringify({}));
 });
 
 $(document).on("click",".olay-sil", function() {
     const olayId = $(this).attr("data-id")
     $("#olayno-"+olayId).remove();
-    $.post('http://tgiann-mdtv2/olaysil', JSON.stringify({id:olayId}));
-    bildirim("Olay ve Sabıkalar Silindi!", "basari");
+    $.post('http://'+resourceName+'/olaysil', JSON.stringify({id:olayId}));
+    bildirim(lang["removeCriminalRecords"], "basari");
 });
 
 window.addEventListener('message', (event) => {
     if (event.data.type === 'ilk-bilgi') {
         $("#kullanici-ismi").html('<i class="fas fa-user fa-sm"></i>' + event.data.data.name)
         $("#kullanici-rank").html('<i class="fas fa-check-double fa-sm"></i>' + event.data.data.rank)
-        polisIsim = event.data.data.name
+        polisIsim = event.data.data.name;
         polisler = event.data.data.players.police;
         zanlilar = event.data.data.players.user;
         esyalar = event.data.data.items;
+        lang = event.data.data.lang;
+        resourceName = event.data.data.resourceName;
+        setLang();
         autocomplete(document.getElementById("polisSecInput"), polisler);
         autocomplete(document.getElementById("zanliSecInput"), zanlilar);
         autocomplete(document.getElementById("esyaSecInput"), esyalar);
@@ -851,15 +858,38 @@ function cezaListesiTabSet(arr) {
     $("#cezalart-listesi").append(htmlCezalar)
 }
 
-// Raid
-$(document).on("click","#cadir-r",function() {
-    $.post('http://tgiann-mdtv2/cadir-r', JSON.stringify({id: secilenCitizenid}));
-})
+function setLang() {
+    gunler = [lang["monday"], lang["tuesday"], lang["wednesday"], lang["thursday"], lang["friday"], lang["saturday"], lang["sunday"]];
+    $("#olaygir-menu-drag-menu").html(lang["addUserCriminal"] +'<div class="close-drag" id="olay-close"></div>' )
+    $('#search-ceza').attr('placeholder', lang["searchCriminal"]);
+    $('#indirim-ceza').attr('placeholder', lang["penaltyPercent"]);
+    $('.olay-textarea').attr('placeholder', lang["criminalDesc"]);
+    $('#esyaSecInput').attr('placeholder', lang["addItem"]);
 
-$(document).on("click","#motel-r",function() {
-    $.post('http://tgiann-mdtv2/motel-r', JSON.stringify({id: secilenCitizenid}));
-})
+    $('#polisSecInput').attr('placeholder', lang["addPolice"]);
+    $('#zanliSecInput').attr('placeholder', lang["addCriminal"]);
 
-$(document).on("click","#ev-r",function() {
-    $.post('http://tgiann-mdtv2/ev-r', JSON.stringify({ev: $(this).attr("data-ev")}));
-})
+    $(".ceza-kayit").html(lang["saveCriminalRecord"]);
+    $("#sabika-menu-drag-menu").html(lang["records"]+'<div class="close-drag" id="sabika-close"></div>');
+    $("#aranma-menu-drag-menu").html(lang["addWanted"]+'<div class="close-drag" id="aranma-close"></div>');
+    $(".aranmabutton").html(lang["approve"]);
+
+    $(".pd-text").html(lang["mdtHeader"]);
+    $("#sorgu-tab-menu").html(lang["searchTopMenu"]);
+    $("#olay-tab-menu ").html(lang["crimes"]);
+    $("#arananlar-tab-menu").html(lang["wanteds"]);
+    $("#cezalart-tab-menu").html(lang["criminalist"]);
+       
+    $("#policeDataDeparmant").html('<i class="fas fa-university fa-sm"></i>'+lang["policeDataDeparmant"]);
+
+
+    $("#htmlName").html(lang["htmlName"]);
+    $("#htmlNumber").html(lang["htmlNumber"]);
+    $("#htmlPlate").html(lang["htmlPlate"]);
+    $("#sorgula").html(lang["htmlSearchData"]);
+    $("#sorgu-geri").html(lang["htmlBack"]);
+    $("#htmlUserData").html(lang["htmlUserData"]);
+    $("#arac-bilgi").html(lang["htmlUserCarsData"]);
+
+    $('#search-ceza-t').attr('placeholder', lang["htmlSearchCriminal"]);
+}

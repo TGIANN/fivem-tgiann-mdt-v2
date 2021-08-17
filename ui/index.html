@@ -13,10 +13,10 @@
     <body>
         <div id="tablet">
             <div id="olaygir-menu">
-                <div class="olaygir-menu-header" id="olaygir-menu-drag-menu">Sabıka Gir <div class="close-drag" id="olay-close"></div> </div>
+                <div class="olaygir-menu-header" id="olaygir-menu-drag-menu"></div>
                 <div class="inputlar-olay">
-                    <input type="text" id="search-ceza" placeholder="Ceza Ara..."> 
-                    <input type="number" id="indirim-ceza" max="100" min="0" placeholder="Ceza İndirimi (%)">
+                    <input type="text" id="search-ceza"> 
+                    <input type="number" id="indirim-ceza" max="100" min="0">
                 </div>
 
                 <ul class="list-group cezalar-menu"></ul>
@@ -26,11 +26,11 @@
                     <div class="ceza-kamu"><i class="fas fa-broom"></i>0</div>
                     <div class="ceza-tceza"><i class="fas fa-car-crash"></i>0</div>
                 </div>
-                <textarea name="" id="" cols="100" rows="3" class="olay-textarea" placeholder="Süper Kahraman Siviller Tarafından, 3 Kişi Kaçarken Yakalandı..."></textarea>
+                <textarea name="" id="" cols="100" rows="3" class="olay-textarea"></textarea>
                
                 <div class="elegecirilenesya">
                     <div class="autocomplete">
-                        <input id="esyaSecInput" class="esya-input" type="text" name="esyaSec" placeholder="Ele Geçirilen Eşya Ekle">
+                        <input id="esyaSecInput" class="esya-input" type="text" name="esyaSec">
                     </div>
                     <div class="eleGecirilen"> </div>
                 </div>
@@ -49,16 +49,16 @@
                         <div class="zanliIsimleri"></div>
                     </div>
                 </div>
-                <button class="ceza-kayit">Olayı Kaydet</button>
+                <button class="ceza-kayit"></button>
             </div>
 
             <div id="sabika-menu">
-                <div class="olaygir-menu-header" id="sabika-menu-drag-menu">Sabıkalar <div class="close-drag" id="sabika-close"></div> </div>
+                <div class="olaygir-menu-header" id="sabika-menu-drag-menu"></div>
                 <div class="sabika-row"></div>
             </div>
 
             <div id="aranma-menu">
-                <div class="olaygir-menu-header" id="aranma-menu-drag-menu">Arananlara Ekle <div class="close-drag" id="aranma-close"></div> </div>
+                <div class="olaygir-menu-header" id="aranma-menu-drag-menu"></div>
                 <div class="aranma-alt">
                     <input type="text" class="aranmainput" id="aranmaneden" placeholder="Aranma Nedeni">
                     <input type="number" class="aranmainput" id="aranmasaat" placeholder="Aranma Süresi">
@@ -66,58 +66,55 @@
                         <option value="gun">Gün</option>
                         <option value="saat">Saat</option>
                     </select>
-                    <button class="aranmabutton">Onayla</button>
+                    <button class="aranmabutton"></button>
                 </div>
             </div>
 
             <div class="container-fluid">
-                <div class="bildirim">TEST Bildirim!</div>
+                <div class="bildirim"></div>
                 <img src="img/logo.png" class="logo">
                 <div class="top-menu mid">
-                    <div class="pd-text">LOS SANTOS POLİS DEPARTMANI</div>
+                    <div class="pd-text"></div>
                 </div>
                 <div class="pd-close"><i class="fas fa-times"></i></div>
                 <div class="bar"></div>
                 <div class="menu mid">
-                    <div class="menu-button" id="sorgu-tab-menu">Sorgula</div>
-                    <div class="menu-button" id="olay-tab-menu">Olaylar</div>
-                    <div class="menu-button" id="arananlar-tab-menu">Arananlar</div>
-                    <div class="menu-button" id="cezalart-tab-menu">Ceza Listesi</div>
+                    <div class="menu-button" id="sorgu-tab-menu"></div>
+                    <div class="menu-button" id="olay-tab-menu"></div>
+                    <div class="menu-button" id="arananlar-tab-menu"></div>
+                    <div class="menu-button" id="cezalart-tab-menu"></div>
                 </div>
                 <div class="police-bilgi mid">
-                    <div class="police-bilgi-ic"><i class="fas fa-university fa-sm"></i>Los Santos Polis Departmanı</div>
-                    <div class="police-bilgi-ic" id="kullanici-ismi"><i class="fas fa-user fa-sm"></i>Mustafa</div>
-                    <div class="police-bilgi-ic" id="kullanici-rank"><i class="fas fa-check-double fa-sm"></i>Memur 3</div>
+                    <div class="police-bilgi-ic" id="policeDataDeparmant"></div>
+                    <div class="police-bilgi-ic" id="kullanici-ismi"></div>
+                    <div class="police-bilgi-ic" id="kullanici-rank"></div>
                 </div>
                 <div class="sorgu-menu mid" id="sorgu-tab">
                     <div class="sorgu-sol">
                     <div id="sorgu1">
-                            <div class="sorgu-sol-yazi">İsim</div>
+                            <div class="sorgu-sol-yazi" id="htmlName"></div>
                             <input type="text" id="isim-input" class="sorgu-input" placeholder="Mehmet Aranmaz">
-                            <div class="sorgu-sol-yazi">Numara</div>
+                            <div class="sorgu-sol-yazi" id="htmlNumber"></div>
                             <input type="text" id="numara-input" class="sorgu-input" placeholder="999-9999">
-                            <div class="sorgu-sol-yazi">Plaka</div>
+                            <div class="sorgu-sol-yazi" id="htmlPlate"></div>
                             <input type="text" id="plaka-input" class="sorgu-input" placeholder="XYZ123AB">
-                            <button class="sorgu-button" id="sorgula">Sorgula</button>
+                            <button class="sorgu-button" id="sorgula"></button>
                         </div> 
 
                         <div id="sorgu2-button">
-                            <button class="sorgu-button" id="sorgu-geri">Geri Git</button>
+                            <button class="sorgu-button" id="sorgu-geri"></button>
                         </div>
                         <div id="sorgu2"></div>
                     </div>
                     <div class="sorgu-sag">
                         <div class="sorgu-sag-kutu">
                             <div class="aranma-kutu"> </div>
-                            <div class="sorgu-sag-ust">Kişi Bilgileri</div>
+                            <div class="sorgu-sag-ust" id="htmlUserData"></div>
                             <div class="sorgu-sag-alt" id="kullaniciBilgi"></div>
-                            <div class="sorgu-sag-ust" id="arac-bilgi">Araç Bilgileri</div>
+                            <div class="sorgu-sag-ust" id="arac-bilgi"></div>
                             <div class="arac-bilgi-kutu"></div>
 
-                            <div class="sorgu-buttons">
-                                <!-- <button class="sorgu-button-2" id="sabika-gir">Sabıka Görüntüle</button>
-                                <button class="sorgu-button-2" id="olay-gir">Olay Gir</button> -->
-                            </div>
+                            <div class="sorgu-buttons"></div>
                         </div>
                     </div>
                 </div>
@@ -133,13 +130,12 @@
 
                 <div class="cezalart-menu mid" id="cezalart-tab">
                     <div class="inputlar-olay">
-                        <input type="text" id="search-ceza-t" placeholder="Ceza Ara..."> 
+                        <input type="text" id="search-ceza-t" placeholder=""> 
                     </div>
                     <div id="cezalart-listesi"></div>
                 </div>
 
                 <div class="bar" style="margin-top: 25px;"></div>
-
 
             </div>
         </div>

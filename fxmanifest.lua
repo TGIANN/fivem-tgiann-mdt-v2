@@ -1,7 +1,10 @@
 fx_version 'bodacious'
 game 'gta5'
 
-client_script 'client.lua'
+client_scripts {
+	'lang.lua',
+	'client.lua'
+}
 server_scripts {
 	'@mysql-async/lib/MySQL.lua',
 	'server.lua'
