@@ -159,7 +159,7 @@ function screenShot()
         print("HATA: Resim Çekilemedi")
         return "Resim Çekilemedi"
     end
-end)
+end
 
 function openClose()
     nuiFocus = not nuiFocus
