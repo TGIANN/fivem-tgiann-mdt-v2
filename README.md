@@ -8,5 +8,7 @@
 
 **Languages**
 * Turkish
+* English (thx https://github.com/icecubepiso)
+* Czech (thx https://github.com/icecubepiso)
 
 Video: https://youtu.be/6K-Qg8tFvEs
