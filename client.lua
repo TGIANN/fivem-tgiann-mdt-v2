@@ -117,7 +117,11 @@ RegisterNUICallback('resim', function(data, cb)
                     SendNUIMessage({type = 'user-avatar', url = url})
                     TriggerServerEvent("tgiann-mdtv2:setavatar", url, data.id)
                 else
-                    ESX.ShowNotification(lang[langSetting]["photoError"])
+                    if Config.Notify == 'esx' then
+                        ESX.ShowNotification(lang[langSetting]["photoError"])
+                    elseif Config.Notify == 'mythic' then
+                        exports['mythic_notify']:SendAlert('error', lang[langSetting]["photoError"], 2500)
+                    end
                 end
                 openClose()
                 DestroyMobilePhone()
@@ -138,7 +142,7 @@ local screenShotCD = 0
 function screenShot()
     local callbackData = nil
     screenShotCD = 0
-    exports['screenshot-basic']:requestScreenshotUpload("your-webhook", "files[]", function(data)
+    exports['screenshot-basic']:requestScreenshotUpload(Config.Webhook, "files[]", function(data)
         callbackData = json.decode(data)
     end)
     while callbackData == nil do
@@ -213,6 +217,11 @@ RegisterNUICallback('olaysil', function(data, cb)
     TriggerServerEvent("tgiann-mdtv2:olaysil", data.id)
 end)
 
+RegisterCommand('mdt', function()
+    TriggerEvent('tgiann-mdtv2:open')
+end)
+RegisterKeyMapping('mdt', lang[langSetting]["keyMappingHelp"], 'keyboard', 'delete')
+
 RegisterNetEvent("tgiann-mdtv2:open")
 AddEventHandler("tgiann-mdtv2:open", function()
     if PlayerData.job == nil then firstLogin() end
@@ -244,18 +253,38 @@ end)
 RegisterCommand("tabletzoom", function(source, args)
     if PlayerData.job and PlayerData.job.name == "police"  then
         if args[1] == nil then
-            ESX.ShowNotification(lang[langSetting]["zoomSettingNilError"])
+            if Config.Notify == 'esx' then
+                ESX.ShowNotification(lang[langSetting]["zoomSettingNilError"])
+            elseif Config.Notify == 'mythic' then
+                exports['mythic_notify']:SendAlert('error', lang[langSetting]["zoomSettingNilError"], 2500)
+            end
         end
 
         if tonumber(args[1]) < 50 then
-            ESX.ShowNotification(lang[langSetting]["zoomSettingMinError"])
+            if Config.Notify == 'esx' then
+                ESX.ShowNotification(lang[langSetting]["zoomSettingMinError"])
+            elseif Config.Notify == 'mythic' then
+                exports['mythic_notify']:SendAlert('error', lang[langSetting]["zoomSettingMinError"], 2500)
+            end
         elseif tonumber(args[1]) > 100 then
-            ESX.ShowNotification(lang[langSetting]["zoomSettingMaxError"])
+            if Config.Notify == 'esx' then
+                ESX.ShowNotification(lang[langSetting]["zoomSettingMaxError"])
+            elseif Config.Notify == 'mythic' then
+                exports['mythic_notify']:SendAlert('error', lang[langSetting]["zoomSettingMaxError"], 2500)
+            end
         else
-            ESX.ShowNotification(lang[langSetting]["zoomSettingConfirm"])
+            if Config.Notify == 'esx' then
+                ESX.ShowNotification(lang[langSetting]["zoomSettingConfirm"])
+            elseif Config.Notify == 'mythic' then
+                exports['mythic_notify']:SendAlert('success', lang[langSetting]["zoomSettingConfirm"], 2500)
+            end
             SendNUIMessage({type = 'zoom', val = args[1]})
         end
     else
-        ESX.ShowNotification(lang[langSetting]["zoomSettingNotPolice"])
+        if Config.Notify == 'esx' then
+            ESX.ShowNotification(lang[langSetting]["zoomSettingNotPolice"])
+        elseif Config.Notify == 'mythic' then
+            exports['mythic_notify']:SendAlert('error', lang[langSetting]["zoomSettingNotPolice"], 2500)
+        end
     end
 end)

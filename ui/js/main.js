@@ -121,9 +121,9 @@ function sifirekle(sayi) {
 
 $(document).on("click",".kullanici",function() {
     const userData = playerData[$(this).attr("data-id")]
-    let userGender = "Kadın"
+    let userGender = lang["genderF"] 
     if (userData.sex == "m") {
-        userGender = "Erkek"
+        userGender = lang["genderM"] 
     }
     let aranma = JSON.parse(userData.aranma)
     zanliIsim = userData.firstname + " " + userData.lastname
