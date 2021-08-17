@@ -1,4 +1,4 @@
-langSetting = "tr"
+langSetting = "en"
 lang = {
     ["tr"] = {
         -- Client.lua
@@ -22,6 +22,8 @@ lang = {
         ["friday"] = "Cuma",
         ["saturday"] = "Cumartesi",
         ["sunday"] = "Pazar",
+        ["genderF"] = "Kadın",
+        ["genderM"] = "Erkek",
         ["noFoundNumber"] = "Aradığınız Numaraya Ait Veri Bulunamadı!",
         ["noFoundPlate"] = "Aradığınız Plakaya Ait Veri Bulunamadı!",
         ["noFoundUser"] = "Aradığınız İsme Ait Veri Bulunamadı!",
@@ -79,6 +81,7 @@ lang = {
         ["htmlSearchCriminal"] = "Ceza Ara..."
     },
 
+    -- Translator: IceCube( actually google )
     ["en"] = {
         -- Client.lua
         ["photoError"] = "No Picture Taken!",
@@ -101,6 +104,8 @@ lang = {
         ["friday"] = "Friday",
         ["saturday"] = "Saturday",
         ["sunday"] = "Sunday",
+        ["genderF"] = "Female",
+        ["genderM"] = "Male",
         ["noFoundNumber"] = "No Data Found for the Number You Called!",
         ["noFoundPlate"] = "No Data Found for the Plate You Are Looking For!",
         ["noFoundUser"] = "No Data Found for the Name You Searched for!",
@@ -156,5 +161,86 @@ lang = {
         ["htmlUserData"] = "Personal information",
         ["htmlUserCarsData"] = "Vehicle Information",
         ["htmlSearchCriminal"] = "Search Punishment..."
+    },
+
+    -- Translator: Arex
+    ["cz"] = {
+        -- Client.lua
+        ["photoError"] = "Zadny snimek!",
+        ["f8error"] = "CHYBA:",
+        ["zoomSetting"] = "Uprava velikosti tabletu.",
+        ["zoomSettingName"] = "Velikost tabletu",
+        ["zoomSettingHelp"] = "Hodnota mezi 50 a 100",
+        ["zoomSettingNilError"] = "Nevlozil jsi hodnotu! (50-100)",
+        ["zoomSettingMinError"] = "Nemuzes vlozit hodnotu mensi nez 50", --- WHY IS THIS THER 2 TIMES? 
+        ["zoomSettingMinError"] = "Nemuzes vlozit hodnotu mensi nez 50", --- WHY IS THIS THER 2 TIMES? 
+        ["zoomSettingMaxError"] = "Nemuzes vlozit hodnotu vetsi nez 100",
+        ["zoomSettingConfirm"] = "Velikost tabletu byla upravena",
+        ["zoomSettingNotPolice"] = "Nemas opravneni pro pouziti tohoto prikazu!",
+        -- Main.js
+        ["monday"] = "Pondeli",
+        ["tuesday"] = "Utery",
+        ["wednesday"] = "Streda",
+        ["thursday"] = "Ctvrtek",
+        ["friday"] = "Patek",
+        ["saturday"] = "Sobota",
+        ["sunday"] = "Nedele",
+        ["genderF"] = "Muz",
+        ["genderM"] = "Zena",
+        ["noFoundNumber"] = "Nebyly nalezeny zadne data pro zadane cislo!",
+        ["noFoundPlate"] = "Nebyly nalezeny zadne data pro zadanou SPZ!",
+        ["noFoundUser"] = "Nebyly nalezeny zadne data pro zadane jmeno!",
+        ["addWanted"] = "Pridat k hledanym",
+        ["removeWanted"] = "Vymazat hledani!",
+        ["removedWanted"] = "Vyhledat smazane!",
+        ["sex"] = "Pohlavi",
+        ["name"] = "Jmeno",
+        ["lastname"] = "Prijmeni",
+        ["phoneNumber"] = "Telefonni cislo",
+        ["bankMoney"] = "Bankovni zustatek",
+        ["dob"] = "Datum narozeni",
+        ["uploadPhoto"] = "Nahraj fotku",
+        ["photoURL"] = "URL fotky",
+        ["viewCriminalRecord"] = "Zobrazit zaznam",
+        ["addCriminalRecord"] = "Zadat udalost",
+        ["unknown"] = "Neznamy",
+        ["noCriminalDescription"] = "Nezadal jsi podrobnosti k udalosti!",
+        ["noAddCriminal"] = "Nezadal jsi podrobnosti k udalosti!",
+        ["criminalAdded"] = "Udalost zaznamenana!",
+        ["criminalNo"] = "Zadny incident...",
+        ["search"] = "Hledat",
+        ["noFoundUserCriminalData"] = "Cistny trestni rejstrik!",
+        ["noFoundCriminalData"] = "Zadne udalosti nezaznamenany!",
+        ["noCriminalNumber"] = "Nezadal jsi cislo udalosti!",
+        ["removedCriminalRecord"] = "Zlocinec ocisten!",
+        ["photoUploaded"] = "Fotka nahrana!",
+        ["noReasonWanted"] = "Nenapsal jsi duvod hovoru!",
+        ["noReasonClock"] = "Nenapsal jsi cas hovoru!",
+        ["addedWanted"] = "Záznam hovoru vytvoren!",
+        ["removeCriminalRecords"] = "Incident a zaznamy smazany!",
+        --html
+        ["addUserCriminal"] = "Ziskat trestni rejstrik",
+        ["penaltyPercent"] = "Snizeni pokuty (%)",
+        ["criminalDesc"] = "Superhrdina chycen civilisty, 3 lide utekli...",
+        ["addItem"] = "Pridejte zachynece polozky",
+        ["addPolice"] = "Pridat officera",
+        ["addCriminal"] = "Pridat suspecta",
+        ["saveCriminalRecord"] = "Ulozit udalost",
+        ["records"] = "Zaznamy",
+        ["approve"] = "Dukazy",
+        ["mdtHeader"] = "LOS SANTOS POLICE DEPARTMENT",
+        ["searchTopMenu"] = "Zeptejte se",
+        ["crimes"] = "Zlociny",
+        ["wanteds"] = "Hledani",
+        ["criminalist"] = "Seznam pokut",
+        ["policeDataDeparmant"] = "Los Santos Police Department",
+        ["htmlName"] = "Jmeno a prijmeni",
+        ["htmlNumber"] = "Telefonni cislo",
+        ["htmlPlate"] = "SPZ",
+        ["htmlSearchData"] = "Hledat",
+        ["htmlBack"] = "Zpet",
+        ["htmlUserData"] = "Osobni udaje",
+        ["htmlUserCarsData"] = "Udaje o vozidle",
+        ["htmlSearchCriminal"] = "Hledat trest..."
     }
 }
