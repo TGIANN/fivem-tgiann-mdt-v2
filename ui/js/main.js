@@ -146,7 +146,8 @@ $(document).on("click",".kullanici",function() {
     $.post('http://'+resourceName+'/photo', JSON.stringify({data: secilenCitizenid}), function(cbData) {
         let userPhoto = cbData
         if (userPhoto == null) { userPhoto = "img/avatar.png" }
-
+        let userBank = userData.accounts
+        if (!userBank) { userBank = { bank: 0 }; console.log("user bank data not found"); } else { userBank = JSON.parse(userBank); }
         hideUi("#arac-bilgi")
         hideUi(".arac-bilgi-kutu")
         $("#kullaniciBilgi").html(`
@@ -158,7 +159,7 @@ $(document).on("click",".kullanici",function() {
 
             <div class="sorgu-sag-alt-sag">
                 <div class="bilgi"><div class="bilgi-sol">${lang["phoneNumber"]}</div><div class="bilgi-sag">${userData.phone_number}</div></div>
-                <div class="bilgi"><div class="bilgi-sol">${lang["bankMoney"]}</div><div class="bilgi-sag">${Intl.NumberFormat('en-US').format(JSON.parse(userData.accounts).bank)}$</div></div>
+                <div class="bilgi"><div class="bilgi-sol">${lang["bankMoney"]}</div><div class="bilgi-sag">${Intl.NumberFormat('en-US').format(userBank.bank)}$</div></div>
                 <div class="bilgi"><div class="bilgi-sol">${lang["dob"]}</div><div class="bilgi-sag">${userData.dateofbirth}</div></div>
             </div>
 
