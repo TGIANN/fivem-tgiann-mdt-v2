@@ -15,3 +15,5 @@
 * French (thx https://github.com/icarius)
 
 Video: https://youtu.be/6K-Qg8tFvEs
+
+For more fivem scripts; https://tgiann.tebex.io/category/1768400
